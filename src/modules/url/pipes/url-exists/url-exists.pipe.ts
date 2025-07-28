@@ -11,8 +11,7 @@ export class UrlExistsPipe implements PipeTransform {
    transform(uid: any) {
     console.log(`Validating URL with uid: ${uid}`);
 
-    const redirectUrl =  this.urlService.findOne(uid);
-    console.log(`redirectUrl: ${redirectUrl}`);
+    const redirectUrl = this.urlService.findOne(uid);
 
 
     if (!redirectUrl) {

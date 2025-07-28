@@ -5,6 +5,8 @@ import { UidService } from 'src/services/uid/uid.service';
 import { DatabaseService } from 'src/database/database.service';
 import { ConfigService } from '@nestjs/config';
 import { Response } from 'express';
+import { Url } from '@prisma/client';
+import { dmmfToRuntimeDataModel } from 'generated/prisma/runtime/library';
 
 @Injectable()
 export class UrlService {
@@ -25,7 +27,7 @@ export class UrlService {
     const url = await this.databaseService.url.create({
       data: {
         ...createUrlDto,
-        url: `${this.host}/url/${randId}`,
+        url: `${this.host}/${randId}`,
       },
     });
     return url;
@@ -39,17 +41,24 @@ export class UrlService {
     console.log(`uuid: ${uid}`);
     const url =  await this.databaseService.url.findUnique({
       where: {
-        url: `${this.host}/url/${uid}`,
+        url: `${this.host}/${uid}`,
       },
     });
     return url;
   }
 
-  update(uid: number, updateUrlDto: UpdateUrlDto) {
-    return `This action updates a #${uid} url`;
+  async update(id: string, updateUrlDto: UpdateUrlDto) {
+
+    return await this.databaseService.url.update({
+      where: { id },
+      data:updateUrlDto
+    });
   }
 
-  remove(uid: number) {
-    return `This action removes a #${uid} url`;
+  async remove(id: string) {
+    console.log(`Removing URL with id: ${id}`);
+    return await this.databaseService.url.delete({
+      where: { id },  
+    });
   }
 }
