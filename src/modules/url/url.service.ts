@@ -1,12 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateUrlDto } from './dto/create-url.dto';
 import { UpdateUrlDto } from './dto/update-url.dto';
 import { UidService } from 'src/services/uid/uid.service';
 import { DatabaseService } from 'src/database/database.service';
 import { ConfigService } from '@nestjs/config';
-import { Response } from 'express';
-import { Url } from '@prisma/client';
-import { dmmfToRuntimeDataModel } from 'generated/prisma/runtime/library';
 import { GetUrlsDto } from './dto/get-urls-dto';
 
 @Injectable()

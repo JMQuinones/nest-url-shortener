@@ -1,3 +1,5 @@
+import { title } from 'process';
+
 export const host = `http://localhost:3000`;
 
 export const uid = `abc123`;
@@ -16,9 +18,15 @@ export const generateUrlPayload = ({
   url: `${host}/${uid}`,
 });
 
+export const generateCreateUrlPayload = () => ({
+  title: 'Google',
+  description: 'A search engine',
+  redirect: 'https://google.com',
+});
+
 export const generateUrlArray = () => [
   {
-    id: "1",
+    id: '1',
     title: 'Google',
     description: 'A search engine',
     redirect: 'https://google.com',
@@ -27,7 +35,7 @@ export const generateUrlArray = () => [
     url: `${host}/${uid}`,
   },
   {
-    id: "2",
+    id: '2',
     title: 'Facebook',
     description: 'A social media platform',
     redirect: 'https://facebook.com',
@@ -36,7 +44,7 @@ export const generateUrlArray = () => [
     url: `${host}/facebook-unique-id`,
   },
   {
-    id: "3",
+    id: '3',
     title: 'Twitter',
     description: 'A social media platform',
     redirect: 'https://twitter.com',

@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { App } from 'supertest/types';
-import { AppModule } from './../src/app.module';
+import { AppModule } from '../src/app.module';
 import helmet from 'helmet';
 import { DatabaseService } from '../src/database/database.service';
 import { CacheService } from '../src/core/cache/cache.service';
@@ -39,4 +39,4 @@ let app: INestApplication<App>;
     await app.close();
   });
 
-  export { server };
+  export { server, app };
