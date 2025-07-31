@@ -8,5 +8,8 @@
   },
   "setupFilesAfterEnv": ["./setup.ts"],
   "globalSetup": "<rootDir>/global-setup.ts",
-  "globalTeardown": "<rootDir>/global-teardown.ts"
+  "globalTeardown": "<rootDir>/global-teardown.ts",
+  "moduleNameMapper": {
+    "^src/(.*)$": "<rootDir>/$1"
+  }
 }

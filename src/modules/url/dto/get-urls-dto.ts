@@ -5,14 +5,20 @@ import { Transform } from 'class-transformer';
 export class GetUrlsDto {
   @IsOptional()
   filter?: string;
-  @IsOptional()
   @IsInt()
-  @Min(1)
-  @Transform(({ value }) => parseInt(value))
-  page?: number;
   @IsOptional()
-  @IsInt()
+  @Transform(({ value }) => {
+
+    return value? parseInt(value, 10) : 1;
+  })
   @Min(1)
-  @Transform(({ value }) => parseInt(value))
-  limit?: number;
+  page?: number
+
+  @IsInt()
+  @IsOptional()
+  @Transform(({ value }) => {
+    return value? parseInt(value, 10) : 10;
+  })
+  @Min(1)
+  limit?: number
 }

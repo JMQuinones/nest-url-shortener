@@ -34,8 +34,12 @@ export class UrlService {
     return url;
   }
 
-  async findAll({ filter, page = 1, limit = 10 }: GetUrlsDto) {
-    const skip = (page - 1)*limit
+  async findAll({ page = 1, limit = 10, filter }: GetUrlsDto) {
+    console.log(
+      `Finding URLs with filter: ${filter}, page: ${page}, limit: ${limit}`,
+    );
+
+    const skip = (page - 1) * limit;
     const whereClause = filter
       ? {
           OR: [
@@ -48,29 +52,33 @@ export class UrlService {
     const urls = await this.databaseService.url.findMany({
       where: whereClause,
       take: limit,
-      skip
+      skip,
     });
 
-    const totalCount = await this.databaseService.url.count()
-    const totalPages = Math.ceil(totalCount/limit)
-    let baseUrl= `${this.host}/url?limit=${limit}`
+    const totalCount = await this.databaseService.url.count();
+    const totalPages = Math.ceil(totalCount / limit);
+    let baseUrl = `${this.host}/url?limit=${limit}`;
     if (filter) {
-      baseUrl += `&filter=${encodeURIComponent(filter)}`
+      baseUrl += `&filter=${encodeURIComponent(filter)}`;
     }
-    const nextPage = page < totalPages ? baseUrl += `&page=${encodeURIComponent(page+1)}` : ''
-    const prevPage = page > 1 ? baseUrl += `&page=${encodeURIComponent(page-1)}` : ''
+    const nextPage =
+      page < totalPages
+        ? (baseUrl += `&page=${encodeURIComponent(page + 1)}`)
+        : '';
+    const prevPage =
+      page > 1 ? (baseUrl += `&page=${encodeURIComponent(page - 1)}`) : '';
     const meta = {
-        currentPage: page,
-        perPage: limit,
-        totalCount,
-        totalPages,
-        nextPage,
-        prevPage,
-      }
+      currentPage: page,
+      perPage: limit,
+      totalCount,
+      totalPages,
+      nextPage,
+      prevPage,
+    };
     return {
       urls,
-      meta
-    }
+      meta,
+    };
   }
 
   async findOne(uid: string) {

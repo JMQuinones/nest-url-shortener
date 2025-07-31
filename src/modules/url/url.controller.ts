@@ -32,6 +32,7 @@ export class UrlController {
   @Get('url')
   @UseGuards(AuthGuard)
   findAll(@Query() params: GetUrlsDto) {
+    console.log('Received query parameters:', params);
     return this.urlService.findAll(params);
   }
 
