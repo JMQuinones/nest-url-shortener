@@ -7,36 +7,37 @@ import { DatabaseService } from '../src/database/database.service';
 import { CacheService } from '../src/core/cache/cache.service';
 
 let app: INestApplication<App>;
-  let server: any;
-  let databaseService: DatabaseService;
-  let cacheService: CacheService;
-  beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
+let server: any;
+let databaseService: DatabaseService;
+let cacheService: CacheService;
+beforeAll(async () => {
+  const moduleFixture: TestingModule = await Test.createTestingModule({
+    imports: [AppModule],
+  }).compile();
 
-    app = moduleFixture.createNestApplication();
+  app = moduleFixture.createNestApplication();
 
-    app.use(helmet());
-    app.useGlobalPipes(
-      new ValidationPipe({
-        whitelist: true,
-      }),
-    );
+  app.use(helmet());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+    }),
+  );
 
-    await app.init();
-    server = app.getHttpServer();
-    databaseService = app.get(DatabaseService);
-    cacheService = app.get(CacheService);
-  });
+  await app.init();
+  server = app.getHttpServer();
+  databaseService = app.get(DatabaseService);
+  cacheService = app.get(CacheService);
+});
 
-  afterEach(async () => {
-    await cacheService.reset();
-    await databaseService.resetDb();
-  });
+afterEach(async () => {
+  await cacheService.reset();
+  await databaseService.resetDb();
+});
 
-  afterAll(async () => {
-    await app.close();
-  });
+afterAll(async () => {
+  await server.close();
+  await app.close();
+});
 
-  export { server, app };
+export { server, app };

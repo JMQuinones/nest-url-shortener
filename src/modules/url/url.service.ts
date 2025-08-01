@@ -32,9 +32,7 @@ export class UrlService {
   }
 
   async findAll({ page = 1, limit = 10, filter }: GetUrlsDto) {
-    console.log(
-      `Finding URLs with filter: ${filter}, page: ${page}, limit: ${limit}`,
-    );
+
 
     const skip = (page - 1) * limit;
     const whereClause = filter
@@ -79,7 +77,6 @@ export class UrlService {
   }
 
   async findOne(uid: string) {
-    console.log(`uuid: ${uid}`);
     const url = await this.databaseService.url.findUnique({
       where: {
         url: `${this.host}/${uid}`,
